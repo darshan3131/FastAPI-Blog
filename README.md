@@ -15,10 +15,15 @@
 
 🚀 Features
 	•	📝 Create and manage blogs
+ 
 	•	👤 User registration with password hashing
+ 
 	•	🔗 Blogs linked to users via foreign keys
+ 
 	•	📂 SQLite database (auto-generated on startup)
+ 
 	•	⚡ Interactive API docs via Swagger UI and ReDoc
+ 
 
 
 ⚙️ Tech Stack
@@ -30,24 +35,20 @@
 
 🛠️ Setup & Run
 	1.	Clone the repository:
-
 git clone https://github.com/darshan3131/FastAPI-Blog.git
 cd FastAPI-Blog
 
 
 	2.	Create and activate a virtual environment:
-
 python3 -m venv blog-env
 source blog-env/bin/activate
 
 
 	3.	Install dependencies:
-
 pip install -r requirements.txt
 
 
 	4.	Run the app:
-
 uvicorn blog.main:app --reload --port 8001
 
 
@@ -65,13 +66,11 @@ uvicorn blog.main:app --reload --port 8001
 📌 Example Requests
 
 Create a user
-
 curl -X POST "http://127.0.0.1:8001/users" \
   -H "Content-Type: application/json" \
   -d '{"name":"alice","email":"alice@example.com","password":"secret"}'
 
 Create a blog
-
 curl -X POST "http://127.0.0.1:8001/blog" \
   -H "Content-Type: application/json" \
   -d '{"title":"My Post","body":"Hello world"}'
@@ -79,12 +78,12 @@ curl -X POST "http://127.0.0.1:8001/blog" \
 
 
 🐛 Troubleshooting
-	•	Port already in use → run on another port:
+	Port already in use → run on another port:
 
 uvicorn blog.main:app --reload --port 8002
 
 
-	•	Missing dependencies → reinstall:
+	Missing dependencies → reinstall:
 
 pip install -r requirements.txt
 
