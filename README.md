@@ -1,124 +1,145 @@
-# FastAPI Blog — Setup & Run
 
-This project is a small FastAPI application using SQLAlchemy and SQLite. This README explains how to create or use a virtual environment, install dependencies, run the app, open the interactive docs, and make example requests.
+<h1 align="center">📖 FastAPI Blog</h1>  
+<h3 align="center">A lightweight blogging API built with FastAPI, SQLAlchemy & SQLite</h3>  
 
-> Tested on macOS with zsh and Python 3.13 (adjust `python` commands for your environment).
 
-## Prerequisites
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-0.110+-teal?logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Database-SQLite-lightgrey?logo=sqlite&logoColor=blue" />
+  <img src="https://img.shields.io/badge/ORM-SQLAlchemy-red?logo=python&logoColor=white" />
+</p>  
 
-- Python 3.10+ (project used 3.13)
-- Git (optional if you cloned the repo)
 
-## Quick start (recommended)
 
-1. Open a terminal and change to the project directory:
+⸻
 
-   ```zsh
-   cd "/Users/darshansiddarth/Documents/JOB prep/Fastapi"
-   ```
+🚀 Features
+	•	📝 Create and manage blogs
+	•	👤 User registration with password hashing
+	•	🔗 Blogs linked to users via foreign keys
+	•	📂 SQLite database (auto-generated on startup)
+	•	⚡ Interactive API docs via Swagger UI and ReDoc
 
-2. Create a virtual environment (if you don't want to use the provided `blog-env`):
+⸻
 
-   ```zsh
-   python3 -m venv blog-env
-   source "$(pwd)/blog-env/bin/activate"
-   ```
+⚙️ Tech Stack
+	•	Backend: FastAPI
+	•	ORM: SQLAlchemy
+	•	Database: SQLite
+	•	Server: Uvicorn
 
-   If you already have the `blog-env` folder in the repo you can activate it:
+⸻
 
-   ```zsh
-   source "./blog/blog-env/bin/activate"
-   ```
+🛠️ Setup & Run
+	1.	Clone the repository:
 
-3. Install dependencies from `requirements.txt`:
+git clone https://github.com/darshan3131/FastAPI-Blog.git
+cd FastAPI-Blog
 
-   ```zsh
-   pip install -r requirements.txt
-   ```
 
-4. Run the FastAPI app with reload (development):
+	2.	Create and activate a virtual environment:
 
-   ```zsh
-   uvicorn blog.main:app --reload --port 8001
-   ```
+python3 -m venv blog-env
+source blog-env/bin/activate
 
-   - Default port is 8000; if it's already used, pass `--port 8001` (or another free port).
-   - To stop the server press CTRL+C.
 
-## Open the interactive API docs
+	3.	Install dependencies:
 
-- Swagger UI: http://127.0.0.1:8001/docs
-- ReDoc: http://127.0.0.1:8001/redoc
+pip install -r requirements.txt
 
-These are generated automatically by FastAPI.
 
-## Database
+	4.	Run the app:
 
-- The app uses SQLite and will create `blog.db` in the project directory when the app starts (SQLAlchemy `create_all` runs on startup).
-- If you see a SQLAlchemy error about a missing referenced table (e.g. `NoReferencedTableError` for `users`), create a user first via the `/users` endpoint (examples below) so foreign keys succeed when creating blogs.
+uvicorn blog.main:app --reload --port 8001
 
-## Example requests
 
-1. Create a user (POST /users)
+	5.	Open API Docs:
+	•	Swagger UI → http://127.0.0.1:8001/docs
+	•	ReDoc → http://127.0.0.1:8001/redoc
 
-   ```bash
-   curl -X POST "http://127.0.0.1:8001/users" \
-     -H "Content-Type: application/json" \
-     -d '{"name":"alice","email":"alice@example.com","password":"secret"}'
-   ```
+⸻
 
-   Response contains the user JSON including `id`.
+🗄️ Database
+	•	Uses SQLite (blog.db) created automatically on startup.
+	•	Note: A blog must be linked to a user. Create a user first via /users.
 
-2. Create a blog (POST /blog)
+⸻
 
-   - If no users exist the app creates a default user automatically. Otherwise the first user is used.
+📌 Example Requests
 
-   ```bash
-   curl -X POST "http://127.0.0.1:8001/blog" \
-     -H "Content-Type: application/json" \
-     -d '{"title":"My Post","body":"Hello world"}'
-   ```
+Create a user
 
-   Response contains the created blog JSON.
+curl -X POST "http://127.0.0.1:8001/users" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"alice","email":"alice@example.com","password":"secret"}'
 
-## Troubleshooting
+Create a blog
 
-- Address already in use:
-  - Find process on default port and kill it:
-    ```zsh
-    lsof -i :8000
-    kill -9 <PID>
-    ```
-  - Or run on a different port: `uvicorn blog.main:app --reload --port 8001`
+curl -X POST "http://127.0.0.1:8001/blog" \
+  -H "Content-Type: application/json" \
+  -d '{"title":"My Post","body":"Hello world"}'
 
-- `ModuleNotFoundError: No module named 'sqlalchemy'`:
-  - Activate the correct virtual environment and run `pip install -r requirements.txt` again.
 
-- `sqlalchemy.exc.NoReferencedTableError` for `blogs.user_id`:
-  - The `Blog` model has a foreign key to `users.id`. Create a user first via `/users` or ensure the `User` model is defined and `models.Base.metadata.create_all(bind=engine)` runs before creating blogs.
+⸻
 
-## Useful commands
+🐛 Troubleshooting
+	•	Port already in use → run on another port:
 
-- Activate venv (macOS / zsh):
-  ```zsh
-  source ./blog-env/bin/activate
-  ```
-- Install dependencies:
-  ```zsh
-  pip install -r requirements.txt
-  ```
-- Run server:
-  ```zsh
-  uvicorn blog.main:app --reload
-  ```
-- Run on different port:
-  ```zsh
-  uvicorn blog.main:app --reload --port 8001
-  ```
+uvicorn blog.main:app --reload --port 8002
 
-## Notes
 
-- The repository already contains `blog-env` in the `blog/` folder. If you prefer, create and use a fresh virtual environment outside the repo to keep dependencies isolated.
-- For production, do not use `--reload` and consider a production-ready server config (gunicorn/uvicorn with workers) and a proper RDBMS.
+	•	Missing dependencies → reinstall:
 
-If you want, I can also add Postman/HTTPie examples, or update README with environment variable instructions.  
+pip install -r requirements.txt
+
+
+
+⸻
+
+📂 Project Structure
+
+FastAPI-Blog/
+│── blog/
+│   ├── __init__.py
+│   ├── main.py           # Entry point for FastAPI app
+│   │
+│   ├── database.py       # Database connection & session
+│   ├── models.py         # SQLAlchemy models (User, Blog, etc.)
+│   ├── schemas.py        # Pydantic schemas for validation
+│   │
+│   ├── routers/          # Routers for different features
+│   │   ├── __init__.py
+│   │   ├── user.py       # Endpoints for user CRUD
+│   │   ├── blog.py       # Endpoints for blog CRUD
+│   │
+│   ├── repository/       # Data access layer (CRUD logic)
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── blog.py
+│   │
+│   ├── utils/            # Helpers (hashing, auth, etc.)
+│       ├── __init__.py
+│       ├── hashing.py    # Password hashing with bcrypt
+│       ├── oauth2.py     # JWT authentication (future upgrade)
+│
+│── requirements.txt
+│── README.md
+
+
+⸻
+
+🌟 Future Enhancements
+	•	🔑 JWT Authentication
+	•	🗄️ Migrate to PostgreSQL/MySQL
+	•	🧑‍💻 Role-based permissions
+	•	🚀 Docker support
+
+⸻
+
+
+<p align="center">⚡ Built with ❤️ using FastAPI</p>  
+
+
+
+⸻
