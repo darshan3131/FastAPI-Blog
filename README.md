@@ -12,7 +12,6 @@
 
 
 
-⸻
 
 🚀 Features
 	•	📝 Create and manage blogs
@@ -21,7 +20,6 @@
 	•	📂 SQLite database (auto-generated on startup)
 	•	⚡ Interactive API docs via Swagger UI and ReDoc
 
-⸻
 
 ⚙️ Tech Stack
 	•	Backend: FastAPI
@@ -29,7 +27,6 @@
 	•	Database: SQLite
 	•	Server: Uvicorn
 
-⸻
 
 🛠️ Setup & Run
 	1.	Clone the repository:
@@ -58,13 +55,12 @@ uvicorn blog.main:app --reload --port 8001
 	•	Swagger UI → http://127.0.0.1:8001/docs
 	•	ReDoc → http://127.0.0.1:8001/redoc
 
-⸻
+
 
 🗄️ Database
 	•	Uses SQLite (blog.db) created automatically on startup.
 	•	Note: A blog must be linked to a user. Create a user first via /users.
 
-⸻
 
 📌 Example Requests
 
@@ -81,7 +77,6 @@ curl -X POST "http://127.0.0.1:8001/blog" \
   -d '{"title":"My Post","body":"Hello world"}'
 
 
-⸻
 
 🐛 Troubleshooting
 	•	Port already in use → run on another port:
@@ -95,15 +90,13 @@ pip install -r requirements.txt
 
 
 
-⸻
-
 📂 Project Structure
 
+```bash
 FastAPI-Blog/
 │── blog/
 │   ├── __init__.py
 │   ├── main.py           # Entry point for FastAPI app
-│   │
 │   ├── database.py       # Database connection & session
 │   ├── models.py         # SQLAlchemy models (User, Blog, etc.)
 │   ├── schemas.py        # Pydantic schemas for validation
@@ -137,8 +130,16 @@ FastAPI-Blog/
 
 ⸻
 
+And at the end you can keep your enhancements:
 
-<p align="center">⚡ Built with ❤️ using FastAPI</p>  
+```markdown
+✨ **Future Enhancements**
+- 🔑 JWT Authentication  
+- 🛢️ Migrate to PostgreSQL/MySQL  
+- 👨‍💻 Role-based permissions  
+- 🚀 Docker support  
+
+⚡ Built with ❤️ using FastAPI
 
 
 
